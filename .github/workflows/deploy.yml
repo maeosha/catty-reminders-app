@@ -1,0 +1,35 @@
+name: CD
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            cd /home/maeosha/labs/devops/lab4/catty-reminders-app
+
+            # Логинимся в GHCR (если образ приватный)
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            # Скачиваем свежие образы
+            docker compose pull app
+
+            # Перезапускаем контейнеры с пересозданием, если нужно
+            docker compose up -d --remove-orphans
+
+            # Очищаем старые образы
+            docker image prune -f

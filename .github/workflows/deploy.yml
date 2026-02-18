@@ -18,6 +18,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          command_timeout: 30m 
           script: |
             set -e
             cd /home/maeosha/labs/devops/lab4/catty-reminders-app

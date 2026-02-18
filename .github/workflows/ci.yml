@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "main", "docker-compose" ]
+    branches: [ "master" ]
 
 jobs:
   build-and-push:

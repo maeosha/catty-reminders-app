@@ -20,7 +20,7 @@ services:
 
   app:
     # ВАЖНО: указываем image из GHCR
-    image: ghcr.io/${GITHUB_REPOSITORY}/app:latest
+    image: image: ghcr.io/maeosha/catty-reminders-app/app:latest
     build: .  # оставляем для локальной разработки
     depends_on:
       db:

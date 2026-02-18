@@ -22,6 +22,8 @@ jobs:
             set -e
             cd /home/maeosha/labs/devops/lab4/catty-reminders-app
 
+            git pull origin master
+
             # Логинимся в GHCR (если образ приватный)
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
